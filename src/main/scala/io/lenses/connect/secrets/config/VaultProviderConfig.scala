@@ -40,6 +40,8 @@ object VaultProviderConfig {
   val KUBERNETES_TOKEN_PATH: String = "kubernetes.token.path"
   val KUBERNETES_DEFAULT_TOKEN_PATH: String =
     "/var/run/secrets/kubernetes.io/serviceaccount/token"
+  val KUBERNETES_AUTH_PATH: String = "k8s.auth.path"
+  val KUBERNETES_AUTH_PATH_DEFAULT: String = "auth/kubernetes"
 
   val APP_ROLE: String = "app.role.id"
   val APP_ROLE_SECRET_ID: String = "app.role.secret.id"
@@ -356,6 +358,12 @@ object VaultProviderConfig {
     TOKEN_RENEWAL_DEFAULT,
     Importance.MEDIUM,
     "The time in milliseconds to renew the Vault token"
+    ).define(
+    KUBERNETES_AUTH_PATH,
+    Type.STRING,
+    KUBERNETES_AUTH_PATH_DEFAULT,
+    Importance.MEDIUM,
+    "The mount path of the Vault Kubernetes Auth Method"
   )
 }
 case class VaultProviderConfig(props: util.Map[String, _])

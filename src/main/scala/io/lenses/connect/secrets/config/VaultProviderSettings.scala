@@ -31,7 +31,7 @@ case class Jwt(role: String, provider: String, jwt: Password)
 case class UserPass(username: String, password: Password, mount: String)
 case class Ldap(username: String, password: Password, mount: String)
 case class AppRole(role: String, secretId: Password)
-case class K8s(role: String, jwt: Password)
+case class K8s(role: String, jwt: Password, authPath: String)
 case class Cert(mount: String)
 case class Github(token: Password, mount: String)
 
@@ -177,8 +177,9 @@ object VaultSettings extends StrictLogging {
         )
     }
     val jwt = new Password(file.getLines.mkString)
+    val authPath = config.getStringOrThrowOnNull(VaultProviderConfig.KUBERNETES_AUTH_PATH)
     file.close()
-    K8s(role = role, jwt = jwt)
+    K8s(role = role, jwt = jwt, authPath = authPath)
   }
 
   def getUserPass(config: VaultProviderConfig): UserPass = {

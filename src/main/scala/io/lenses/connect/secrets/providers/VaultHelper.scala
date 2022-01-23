@@ -81,7 +81,7 @@ trait VaultHelper extends StrictLogging {
             k8s =>
               vault
                 .auth()
-                .loginByKubernetes(k8s.role, k8s.jwt.value())
+                .loginByKubernetes(k8s.role, k8s.jwt.value(), k8s.authPath)
                 .getAuthClientToken)
       case VaultAuthMethod.GCP =>
         settings.gcp
